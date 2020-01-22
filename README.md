@@ -1,13 +1,13 @@
 ![freeCodeCamp.org Social Banner](https://s3.amazonaws.com/freecodecamp/wide-social-banner.png)
-[![Build Status](https://travis-ci.org/freeCodeCamp/freeCodeCamp.svg?branch=staging)](https://travis-ci.org/freeCodeCamp/freeCodeCamp)
+
 [![Pull Requests Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat)](http://makeapullrequest.com)
 [![first-timers-only Friendly](https://img.shields.io/badge/first--timers--only-friendly-blue.svg)](http://www.firsttimersonly.com/)
-[![Known Vulnerabilities](https://snyk.io/test/github/freecodecamp/freecodecamp/badge.svg)](https://snyk.io/test/github/freecodecamp/freecodecamp[)
 [![Open Source Helpers](https://www.codetriage.com/freecodecamp/freecodecamp/badges/users.svg)](https://www.codetriage.com/freecodecamp/freecodecamp)
+[![Setup Automated](https://img.shields.io/badge/setup-automated-blue?logo=gitpod)](https://gitpod.io/from-referrer/)
 
-## Welcome to freeCodeCamp.org's open source codebase and curriculum!
+## freeCodeCamp.org's open-source codebase and curriculum
 
-[freeCodeCamp.org](https://www.freecodecamp.org) is a friendly community where you can learn to code for free. It is run by a [donor-supported 501(c)(3) nonprofit](https://donate.freecodecamp.org) with the goal of helping millions of busy adults transition into tech. Our community has already helped more than 10,000 people get their first developer job.
+[freeCodeCamp.org](https://www.freecodecamp.org) is a friendly community where you can learn to code for free. It is run by a [donor-supported 501(c)(3) nonprofit](https://donate.freecodecamp.org) to help  millions of busy adults transition into tech. Our community has already helped more than 10,000 people get their first developer job.
 
 Our full-stack web development curriculum is completely free and self-paced. We have thousands of interactive coding challenges to help you expand your skills.
 
@@ -15,9 +15,10 @@ Our full-stack web development curriculum is completely free and self-paced. We 
 
 * [Certifications](#certifications)
 * [The Learning Platform](#the-learning-platform)
-* [Found a Bug](#found-a-bug)
-* [Found a Security Issue](#found-a-security-issue)
+* [Reporting Bugs and Issues](#reporting-bugs-and-issues)
+* [Reporting Security Issues](#reporting-security-issues)
 * [Contributing](#contributing)
+* [Platform, Build and Deployment Status](#platform-build-and-deployment-status)
 * [License](#license)
 
 
@@ -31,7 +32,7 @@ You can pull in these test suites through [freeCodeCamp's CDN](https://cdn.freec
 
 Once you’ve earned a certification, you will always have it. You will always be able to link to it from your LinkedIn or résumé. And when your prospective employers or freelance clients click that link, they’ll see a verified certification specific to you.
 
-The one exception to this is in the event that we discover violations of our [Academic Honesty Policy](https://www.freecodecamp.org/academic-honesty). When we catch people unambiguously plagiarizing (submitting other people's code or projects as their own without citation), we do what all rigorous institutions of learning should do - we revoke their certifications and ban those people.
+The one exception to this is if we discover violations of our [Academic Honesty Policy](https://www.freecodecamp.org/academic-honesty). When we catch people unambiguously plagiarizing (submitting other people's code or projects as their own without citation), we do what all rigorous institutions of learning should do - we revoke their certifications and ban those people.
 
 Here are our six core certifications:
 
@@ -56,7 +57,7 @@ Here are our six core certifications:
 - [Debugging](https://learn.freecodecamp.org/javascript-algorithms-and-data-structures/debugging)
 - [Basic Data Structures](https://learn.freecodecamp.org/javascript-algorithms-and-data-structures/basic-data-structures)
 - [Algorithm Scripting](https://learn.freecodecamp.org/javascript-algorithms-and-data-structures/basic-algorithm-scripting)
-- [Object Oriented Programming](https://learn.freecodecamp.org/javascript-algorithms-and-data-structures/object-oriented-programming)
+- [Object-Oriented Programming](https://learn.freecodecamp.org/javascript-algorithms-and-data-structures/object-oriented-programming)
 - [Functional Programming](https://learn.freecodecamp.org/javascript-algorithms-and-data-structures/functional-programming)
 - [Intermediate Algorithm Scripting](https://learn.freecodecamp.org/javascript-algorithms-and-data-structures/intermediate-algorithm-scripting)
   <br />
@@ -121,24 +122,27 @@ Our community also has:
 
 - A [forum](https://www.freecodecamp.org/forum) where you can usually get programming help or project feedback within hours.
 - A [YouTube channel](https://youtube.com/freecodecamp) with free courses on Python, SQL, Android, and a wide variety of other technologies.
-- [Local study groups](https://study-group-directory.freecodecamp.org/) around the world, where you can code together in person
-- A comprehensive [guide to thousands of programming topics](https://guide.freecodecamp.org/)
-- Medium's [largest technical publication](https://medium.freecodecamp.org)
-- A [Facebook group](https://www.facebook.com/groups/freeCodeCampEarth/permalink/428140994253892/) with over 100,000 members worldwide
+- A [podcast](https://podcast.freecodecamp.org/) with technology insights and inspiring stories from developers.
+- A [Developer News](https://www.freecodecamp.org/news) publication, a free, open source, no-ads place to cross-post your blog articles.
 
-### [Join our community here](https://www.freecodecamp.org/signin).
+> ### [Join our community here](https://www.freecodecamp.org/signin).
 
-### Found a bug?
+### Reporting Bugs and Issues
+If you think you've found a bug, first read the [how to report a bug](https://www.freecodecamp.org/forum/t/how-to-report-a-bug/19543) article and follow its instructions.
 
-If you think you've found a bug, first read the [Help I've Found a Bug](https://www.freecodecamp.org/forum/t/how-to-report-a-bug/19543) article and follow its instructions. If you're confident it's a new bug, and have confirmed that someone else is facing the same issue, go ahead and create a new GitHub issue. Be sure to include as much information as possible so we can reproduce the bug.
+If you're confident it's a new bug and have confirmed that someone else is facing the same issue, go ahead and create a new GitHub issue. Be sure to include as much information as possible so we can reproduce the bug.
 
-### Found a security issue?
+### Reporting Security Issues
 
-Please don't create GitHub issues for security issues. Instead, please send an email to `security@freecodecamp.org` and we'll look into it immediately.
+If you think you have found a vulnerability, please report responsibly. Don't create GitHub issues for security issues. Instead, please send an email to `security@freecodecamp.org` and we'll look into it immediately.
 
 ### Contributing
 
-#### [Please follow these steps to contribute.](CONTRIBUTING.md)
+> ### [Please follow these steps to contribute.](CONTRIBUTING.md)
+
+### Platform, Build and Deployment Status
+
+The general platform status for all our applications is available at [`status.freecodecamp.org`](https://status.freecodecamp.org). The build and deployment status for the code is available in [our DevOps Guide](/docs/devops.md).
 
 ### License
 
@@ -146,5 +150,5 @@ Copyright © 2019 freeCodeCamp.org
 
 The content of this repository is bound by the following licenses:
 
-- The computer software is licensed under the [BSD-3-Clause](LICENSE.md) License.
-- The [curricular content](https://www.npmjs.com/package/@freecodecamp/curriculum) in the [`/curriculum`](/curriculum) folder and its subdirectories are licensed under the [CC-BY-SA-4.0](/curriculum/LICENSE.md) License.
+- The computer software is licensed under the [BSD-3-Clause](LICENSE.md) license.
+- The learning resources in the [`/curriculum`](/curriculum) directory including their subdirectories thereon are licensed under the [CC-BY-SA-4.0](/curriculum/LICENSE.md) license.

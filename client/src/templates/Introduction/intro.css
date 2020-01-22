@@ -1,4 +1,4 @@
-@media screen, (max-width: 767px) {
+@media screen and (max-width: 767px) {
   .intro-layout-container {
     padding: 0 10px;
   }
@@ -8,16 +8,21 @@
   margin-top: 1.45rem;
 }
 
+.intro-layout p,
+.intro-layout li {
+  font-family: 'Lato', sans-serif;
+}
+
 .intro-toc .list-group-item {
   margin: 5px auto;
 }
 
 .intro-toc .list-group-item:hover {
-  background-color: #eee;
+  background-color: var(--secondary-background);
 }
 
 .intro-toc a:hover {
   text-decoration: none;
   text-decoration-style: none;
-  color: #006400;
+  color: var(--secondary-color);
 }

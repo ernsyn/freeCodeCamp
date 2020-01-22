@@ -27,8 +27,6 @@ const jsdom = require('jsdom');
 const dom = new jsdom.JSDOM('');
 global.document = dom.window.document;
 
-require('dotenv').config({ path: path.resolve(__dirname, '../../.env') });
-
 const vm = require('vm');
 
 const puppeteer = require('puppeteer');
@@ -38,9 +36,14 @@ const { getChallengesForLang } = require('../getChallenges');
 const MongoIds = require('./utils/mongoIds');
 const ChallengeTitles = require('./utils/challengeTitles');
 const { challengeSchemaValidator } = require('../schema/challengeSchema');
-const { challengeTypes } = require('../../client/utils/challengeTypes');
+const {
+  challengeTypes,
+  helpCategory
+} = require('../../client/utils/challengeTypes');
 
-const { supportedLangs } = require('../utils');
+const { dasherize } = require('../../utils/slugs');
+
+const { testedLangs } = require('../utils');
 
 const {
   buildDOMChallenge,
@@ -50,6 +53,8 @@ const {
 const {
   createPoly
 } = require('../../client/src/templates/Challenges/utils/polyvinyl');
+
+const testEvaluator = require('../../client/config/test-evaluator').filename;
 
 const oldRunnerFail = Mocha.Runner.prototype.fail;
 Mocha.Runner.prototype.fail = function(test, err) {
@@ -83,13 +88,12 @@ let page;
 runTests();
 
 async function runTests() {
-  let testLangs = [...supportedLangs];
-  if (process.env.TEST_CHALLENGES_FOR_LANGS) {
-    const filterLangs = process.env.TEST_CHALLENGES_FOR_LANGS.split(',').map(
-      lang => lang.trim().toLowerCase()
-    );
-    testLangs = testLangs.filter(lang => filterLangs.includes(lang));
-  }
+  process.on('unhandledRejection', err => {
+    spinner.stop();
+    throw new Error(`unhandledRejection: ${err.name}, ${err.message}`);
+  });
+
+  const testLangs = testedLangs();
 
   const challenges = await Promise.all(
     testLangs.map(lang => getChallenges(lang))
@@ -108,8 +112,15 @@ async function runTests() {
         logLevel: 0
       });
       browser = await puppeteer.launch({
-        args: ['--no-sandbox']
-        // dumpio: true
+        args: [
+          // Required for Docker version of Puppeteer
+          '--no-sandbox',
+          '--disable-setuid-sandbox',
+          // This will write shared memory files into /tmp instead of /dev/shm,
+          // because Docker’s default for /dev/shm is 64MB
+          '--disable-dev-shm-usage'
+          // dumpio: true
+        ]
       });
       global.Worker = createPseudoWorker(await newPageContext(browser));
       page = await newPageContext(browser);
@@ -144,6 +155,15 @@ async function getChallenges(lang) {
   return { lang, challenges };
 }
 
+function validateBlock(challenge) {
+  const dashedBlock = dasherize(challenge.block);
+  if (!helpCategory.hasOwnProperty(dashedBlock)) {
+    return `'${dashedBlock}' block not found as a helpCategory in client/utils/challengeTypes.js file for the '${challenge.title}' challenge`;
+  } else {
+    return null;
+  }
+}
+
 function populateTestsForLang({ lang, challenges }) {
   const mongoIds = new MongoIds();
   const challengeTitles = new ChallengeTitles();
@@ -156,8 +176,13 @@ function populateTestsForLang({ lang, challenges }) {
       describe(challenge.title || 'No title', function() {
         it('Common checks', function() {
           const result = validateChallenge(challenge);
+          const invalidBlock = validateBlock(challenge);
+
           if (result.error) {
             throw new AssertionError(result.error);
+          }
+          if (challenge.challengeType !== 7 && invalidBlock) {
+            throw new Error(invalidBlock);
           }
           const { id, title } = challenge;
           mongoIds.check(id, title);
@@ -253,7 +278,7 @@ function populateTestsForLang({ lang, challenges }) {
 
         describe('Check tests against solutions', function() {
           solutions.forEach((solution, index) => {
-            it(`Solution ${index + 1}`, async function() {
+            it(`Solution ${index + 1} must pass the tests`, async function() {
               this.timeout(5000 * tests.length + 1000);
               const testRunner = await createTestRunner(
                 { ...challenge, files },
@@ -280,9 +305,8 @@ async function createTestRunnerForDOMChallenge(
     files[0].contents = solution;
   }
 
-  const loadEnzyme = files[0].ext === 'jsx';
-
-  const { build, sources } = await buildDOMChallenge(files, {
+  const { build, sources, loadEnzyme } = await buildDOMChallenge({
+    files,
     required,
     template
   });
@@ -290,18 +314,16 @@ async function createTestRunnerForDOMChallenge(
   await context.reload();
   await context.setContent(build);
   await context.evaluate(
-    async(sources, loadEnzyme) => {
-      document.__source = sources && 'index' in sources ? sources['index'] : '';
-      document.__getUserInput = fileName => sources[fileName];
-      document.__frameReady = () => {};
-      document.__loadEnzyme = loadEnzyme;
-      await document.__initTestFrame();
+    async (sources, loadEnzyme) => {
+      const code = sources && 'index' in sources ? sources['index'] : '';
+      const getUserInput = fileName => sources[fileName];
+      await document.__initTestFrame({ code, getUserInput, loadEnzyme });
     },
     sources,
     loadEnzyme
   );
 
-  return async({ text, testString }) => {
+  return async ({ text, testString }) => {
     try {
       const { pass, err } = await Promise.race([
         new Promise((_, reject) => setTimeout(() => reject('timeout'), 5000)),
@@ -310,13 +332,10 @@ async function createTestRunnerForDOMChallenge(
         }, testString)
       ]);
       if (!pass) {
-        throw AssertionError(`${text}\n${err.message}`);
+        throw new AssertionError(err.message);
       }
     } catch (err) {
-      throw typeof err === 'string'
-        ? `${text}\n${err}`
-        : (err.message = `${text}
-        ${err.message}`);
+      reThrow(err, text);
     }
   };
 }
@@ -326,26 +345,34 @@ async function createTestRunnerForJSChallenge({ files }, solution) {
     files[0].contents = solution;
   }
 
-  const { build, sources } = await buildJSChallenge(files);
+  const { build, sources } = await buildJSChallenge({ files });
   const code = sources && 'index' in sources ? sources['index'] : '';
 
-  const testWorker = createWorker('test-evaluator');
-  return async({ text, testString }) => {
+  const testWorker = createWorker(testEvaluator, { terminateWorker: true });
+  return async ({ text, testString }) => {
     try {
       const { pass, err } = await testWorker.execute(
         { testString, build, code, sources },
         5000
-      );
+      ).done;
       if (!pass) {
-        throw new AssertionError(`${text}\n${err.message}`);
+        throw new AssertionError(err.message);
       }
     } catch (err) {
-      throw typeof err === 'string'
-        ? `${text}\n${err}`
-        : (err.message = `${text}
-        ${err.message}`);
-    } finally {
-      testWorker.killWorker();
+      reThrow(err, text);
     }
   };
+}
+
+function reThrow(err, text) {
+  if (typeof err === 'string') {
+    throw new AssertionError(
+      `${text}
+         ${err}`
+    );
+  } else {
+    err.message = `${text}
+       ${err.message}`;
+    throw err;
+  }
 }

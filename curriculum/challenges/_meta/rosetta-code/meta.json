@@ -46,15 +46,15 @@
     ],
     [
       "594d8d0ab97724821379b1e6",
-      "Averages-Mode"
+      "Averages/Mode"
     ],
     [
       "594d966a1467eb84194f0086",
-      "Averages-Pythagorean means"
+      "Averages/Pythagorean means"
     ],
     [
       "594da033de4190850b893874",
-      "Averages-Root mean square"
+      "Averages/Root mean square"
     ],
     [
       "594db4d0dedb4c06a2a4cefd",
@@ -101,6 +101,18 @@
       "Cramer's rule"
     ],
     [
+      "5a23c84252665b21eecc7e03",
+      "Cumulative standard deviation"
+    ],
+    [
+      "5a23c84252665b21eecc7e05",
+      "CUSIP"
+    ],
+    [
+      "5a23c84252665b21eecc7e06",
+      "Cut a rectangle"
+    ],
+    [
       "59669d08d75b60482359409f",
       "Date format"
     ],
@@ -131,6 +143,10 @@
     [
       "59f4eafba0343628bb682785",
       "Discordian date"
+    ],
+    [
+      "5a23c84252665b21eecc7e1e",
+      "Dot product"
     ],
     [
       "599c333915e0ea32d04d4bec",
@@ -222,7 +238,7 @@
     ],
     [
       "5a23c84252665b21eecc7e7b",
-      "GeneratorExponential"
+      "Generator/Exponential"
     ],
     [
       "5a23c84252665b21eecc7e80",
@@ -297,6 +313,54 @@
       "Josephus problem"
     ],
     [
+      "5a23c84252665b21eecc7ecb",
+      "K-d tree"
+    ],
+    [
+      "5a23c84252665b21eecc7eca",
+      "Kaprekar numbers"
+    ],
+    [
+      "5a23c84252665b21eecc7ed1",
+      "Knapsack problem/0-1"
+    ],
+    [
+      "5a23c84252665b21eecc7ed2",
+      "Knapsack problem/Bounded"
+    ],
+    [
+      "5a23c84252665b21eecc7ed3",
+      "Knapsack problem/Continuous"
+    ],
+    [
+      "5a23c84252665b21eecc7ed4",
+      "Knapsack problem/Unbounded"
+    ],
+    [
+      "5a23c84252665b21eecc7ed5",
+      "Knight's tour"
+    ],
+    [
+      "5a23c84252665b21eecc7edb",
+      "Largest int from concatenated ints"
+    ],
+    [
+      "5a23c84252665b21eecc7edc",
+      "Last Friday of each month"
+    ],
+    [
+      "5a23c84252665b21eecc7ede",
+      "Leap year"
+    ],
+    [
+      "5a23c84252665b21eecc7edf",
+      "Least common multiple"
+    ],
+    [
+      "5a23c84252665b21eecc7ee0",
+      "Left factorials"
+    ],
+    [
       "59da22823d04c95919d46269",
       "Sailors, coconuts and a monkey problem"
     ],
@@ -333,10 +397,6 @@
       "Sorting algorithms/Bogosort"
     ],
     [
-      "5a23c84252665b21eecc8003",
-      "Sorting algorithms/Bubble sort"
-    ],
-    [
       "5a23c84252665b21eecc8004",
       "Sorting algorithms/Cocktail sort"
     ],
@@ -345,24 +405,8 @@
       "Sorting algorithms/Comb sort"
     ],
     [
-      "5a23c84252665b21eecc8006",
-      "Sorting algorithms/Counting sort"
-    ],
-    [
       "5a23c84252665b21eecc8007",
       "Sorting algorithms/Gnome sort"
-    ],
-    [
-      "5a23c84252665b21eecc8008",
-      "Sorting algorithms/Heapsort"
-    ],
-    [
-      "5a23c84252665b21eecc8009",
-      "Sorting algorithms/Insertion sort"
-    ],
-    [
-      "5a23c84252665b21eecc800a",
-      "Sorting algorithms/Merge sort"
     ],
     [
       "5a23c84252665b21eecc800b",
@@ -371,18 +415,6 @@
     [
       "5a23c84252665b21eecc800c",
       "Sorting algorithms/Permutation sort"
-    ],
-    [
-      "5a23c84252665b21eecc800d",
-      "Sorting algorithms/Quicksort"
-    ],
-    [
-      "5a23c84252665b21eecc800e",
-      "Sorting algorithms/Radix sort"
-    ],
-    [
-      "5a23c84252665b21eecc800f",
-      "Sorting algorithms/Selection sort"
     ],
     [
       "5a23c84252665b21eecc8010",
